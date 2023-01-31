@@ -10,12 +10,12 @@ under any circumstance for how this document is leveraged.
 Many online courses are built in LMS systems that use [SCORM] - Sharable Content
 Object Reference Model - standards for course data and LMS action sequencing.
 [GLS] - Global Learning Systems - is one example of a platform that fits this
-bill. The rest of this document outlines a (fairly rudimentary) procedure for
-understanding how quiz answers and correctness are encoded in applications like
-GLS. I'm not an expert in SCORM or LMS's and have only observed and learned
-things from the "outside" (i.e. browser dev tools), so it would not be
-surprising if the procedure doesn't match exactly for every LMS application out
-there.
+bill. The rest of this document outlines a (fairly rudimentary and manual)
+procedure for understanding how quiz answers and correctness are encoded in
+applications like GLS. I'm not an expert in SCORM or LMS's and have only
+observed and learned things from the "outside" (i.e. browser dev tools), so it
+would not be surprising if the procedure doesn't match exactly for every LMS
+application out there.
 
 ## Procedure
 
@@ -23,11 +23,11 @@ there.
    the browser's dev tools
 
    ![Auto-open DevTools for popups"](./images/auto-open-dev-tools.png)
-1. Open DevTools on the LMS page that the available modules
+1. Open DevTools on the LMS page that contains the available modules to launch
 1. Open any module (this should also pop open a DevTools instance for the module
    popup)
 1. In the DevTools instances for the module, navigate to the Sources
-1. Navigate to the `scorm-files/html5`/js` folder
+1. Navigate to the `scorm-files/html5/js` folder
 
    ![scorm-frame in Sources](./images/scorm-frame-in-sources.png)
 1. Select the `data.js` file
@@ -37,7 +37,7 @@ there.
    ```
 1. Copy the contents out to a text editor
 1. From the text editor, copy the JSON doc string portion only (i.e. exclude the
-   `window.globalProvideData('data', )` prefix and the `);` suffix)
+   `window.globalProvideData('data', ` prefix and the `);` suffix)
 1. Back in DevTools, navigate to the Console tab
 1. At the console, parse the JSON doc via `JSON.parse(<paste-string-here>);`
 1. Right-click the console-formatted, parsed JSON object and select "Copy
@@ -46,9 +46,10 @@ there.
    highlighting if you want)
 1. Navigate to a question in the LMS module (this procedure assumes multiple
    choice-style questions)
-1. Search for some substring from any of the choices in your text editor
+1. In your text editor, search for some substring from any of the
+   choices
 1. You should see that specific choice in a `"choices"` array that's in an
-   object with `"kind": "interaction"`:
+   object with `"kind": "interaction"` (other fields have been omitted below):
    ```json
    {
      "kind": "interaction",
@@ -80,7 +81,7 @@ there.
 1. Now that we've found the right interaction, we can search by the
    interaction's `"id"` field that is a sibling field to `"choices"` (see
    above). It is recommended to search in reverse from where you are currently
-   in the JSON doc, as the interaction answers are generally at towards the
+   in the JSON doc, as the interaction answers are generally towards the
    bottom of the doc.
 1. This should put the search nested somewhere inside an `"answers"` object,
    where each object under `"answers"` has `"kind": "answer"`.
