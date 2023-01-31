@@ -21,12 +21,14 @@ there.
 
 1. Ensure "Auto-open DevTools for popups" is enabled in the global settings of
    the browser's dev tools
+
    ![Auto-open DevTools for popups"](./images/auto-open-dev-tools.png)
 1. Open DevTools on the LMS page that the available modules
 1. Open any module (this should also pop open a DevTools instance for the module
    popup)
 1. In the DevTools instances for the module, navigate to the Sources
 1. Navigate to the `scorm-files/html5`/js` folder
+
    ![scorm-frame in Sources](./images/scorm-frame-in-sources.png)
 1. Select the `data.js` file
    This file should look something like:
